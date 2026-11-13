@@ -1,0 +1,4 @@
+package br.com.fhocevar.designpatterns;
+import java.util.Map;import org.springframework.http.HttpStatus;import org.springframework.web.bind.MethodArgumentNotValidException;import org.springframework.web.bind.annotation.*;
+@RestControllerAdvice public class ApiExceptionHandler { @ExceptionHandler(IllegalArgumentException.class) @ResponseStatus(HttpStatus.BAD_REQUEST) public Map<String,String> invalid(IllegalArgumentException e){return Map.of("erro",e.getMessage());}
+@ExceptionHandler(MethodArgumentNotValidException.class) @ResponseStatus(HttpStatus.BAD_REQUEST) public Map<String,String> validation(MethodArgumentNotValidException e){return Map.of("erro","Dados inválidos: "+e.getBindingResult().getFieldErrors().stream().map(f->f.getField()+" "+f.getDefaultMessage()).findFirst().orElse("verifique o corpo"));}}
